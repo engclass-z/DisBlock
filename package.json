@@ -20,7 +20,7 @@
   },
   "lint-staged": {
     "src/**/*.scss": "stylelint --fix",
-    "src/**/*.{ts,tsx}": "eslint --fix --cache",
+    "src/**/*.{ts,tsx}": "eslint --fix",
     "*.{ts,tsx,scss}": "prettier --write"
   },
   "dependencies": {
