@@ -15,13 +15,13 @@
     "lint": "run-s lint:*",
     "lint:ts": "eslint --fix --ext ts --ext tsx src",
     "lint:scss": "stylelint --fix **/*.scss",
-    "lint:prettier": "prettier --write **/*.{ts,tsx,scss}",
+    "lint:prettier": "prettier --write **/*.{ts,tsx,scss,json,md}",
     "prepare": "husky install"
   },
   "lint-staged": {
     "src/**/*.scss": "stylelint --fix",
     "src/**/*.{ts,tsx}": "eslint --fix",
-    "*.{ts,tsx,scss}": "prettier --write"
+    "*.{ts,tsx,scss,json,md}": "prettier --write"
   },
   "dependencies": {
     "react": "^18.0.0",
