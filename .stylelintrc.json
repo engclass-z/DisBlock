@@ -1,0 +1,23 @@
+{
+    "extends": ["stylelint-config-recommended-scss", "stylelint-config-styled-components"],
+    "plugins": [
+        "stylelint-scss"
+    ],
+    "customSyntax": "postcss-scss",
+    "rules": {
+        "indentation": 4,
+        "color-named": "never",
+        "selector-class-pattern": null,
+        "selector-id-pattern": null,
+        "no-duplicate-selectors": null,
+        "no-duplicate-at-import-rules": null,
+        "no-invalid-position-at-import-rule": null,
+        "no-invalid-double-slash-comments": null,
+        "no-descending-specificity": null,
+        "at-rule-no-unknown": null,
+        "function-url-quotes": null,
+        "font-family-name-quotes": null,
+        "declaration-block-no-duplicate-properties": null,
+        "max-line-length": null
+    }
+}
