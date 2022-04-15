@@ -2,16 +2,23 @@ import './index.scss';
 
 const INTERVAL_MS = 500;
 
-const NG_WORD = '';
-const REPLACE_USER_NAME = 'この名前に変える';
-const REPLACE_USER_ICON =
-  'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIHZpZXdCb3g9IjAgMCAxNyAxNyIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik0xNyA4LjVhOC41IDguNSAwIDExLTE3IDAgOC41IDguNSAwIDAxMTcgMHptLTUgMEw2LjUgNXY3TDEyIDguNXptLTEuODYgMEw3LjUgNi44MnYzLjM2bDIuNjQtMS42OHpNOC41IDE2YTcuNSA3LjUgMCAxMDAtMTUgNy41IDcuNSAwIDAwMCAxNXoiIGZpbGw9IiMwMDAiIGZpbGwtb3BhY2l0eT0iLjE1IiAvPjxwYXRoIGZpbGwtcnVsZT0iZXZlbm9kZCIgY2xpcC1ydWxlPSJldmVub2RkIiBkPSJNMTYgOC41YTcuNSA3LjUgMCAxMS0xNSAwIDcuNSA3LjUgMCAwMTE1IDB6bS00IDBMNi41IDEyVjVMMTIgOC41eiIgZmlsbD0iI2ZmZiIgLz48L3N2Zz4=';
+let ngWord = '';
+let replaceUserName = '';
+let replaceUserIcon = '';
 
 // dis コメント化を判定する
 // TODO: ここのロジックを充実させる
 export const isDisComment = (input: string, ngList: string[]): boolean => {
   return !!ngList.find((ng) => input.includes(ng));
 };
+
+// 保存してある語句を読み込み
+chrome.storage.local.get(['comment', 'nickname', 'imageUrl']).then((value) => {
+  const { comment, nickname, imageUrl } = value;
+  ngWord = comment;
+  replaceUserName = nickname;
+  replaceUserIcon = imageUrl;
+});
 
 // コメントが遅延ロードされるので定期監視する
 const timer = setInterval(() => {
@@ -54,17 +61,18 @@ const timer = setInterval(() => {
           if (!userNameElement || !userIconElement || !comment) return;
 
           // dis コメントでない場合は何もしない
-          if (!isDisComment(comment, [NG_WORD])) return;
+          if (!isDisComment(comment, [ngWord])) return;
 
           // 本来のアイコンのロード後に画像を書き換える
           userIconElement.onload = () => {
-            if (userIconElement.src !== REPLACE_USER_ICON) {
-              userIconElement.src = REPLACE_USER_ICON;
+            if (userIconElement.src !== replaceUserIcon) {
+              userIconElement.onload = () => {};
+              userIconElement.src = replaceUserIcon;
             }
           };
 
           // 名前を書き換える
-          userNameElement.innerText = REPLACE_USER_NAME;
+          userNameElement.innerText = replaceUserName;
         });
       });
     }).observe(dom, {
