@@ -4,6 +4,7 @@ YouTube 動画の批判コメントの投稿主表示を任意に変更できる
 
 # Installation
 
+1. `yarn` `git` が使えるようにする
 1. ダウンロードしたい階層で `git clone https://github.com/engclass-z/disblock.git` コマンドを実行
 1. clone したディレクトリに移動
 1. `yarn && yarn build` を実行し、dist ディレクトリが作成されることを確認
